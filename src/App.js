@@ -1,22 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./App.css";
+import Button from '@material-ui/core/Button';
 
 function App() {
-  const getData = async () => {
-    const resource = await fetch(
-      "https://jsonplaceholder.typicode.com/todos/1"
-    );
-    const data = await resource.json();
-    console.log(data);
-  };
-
-  useEffect(() => {
-    getData()
-  }, [])
-
   return (
     <div className="App">
-      <h1>React Application</h1>
+      <h1>Covid-19 Application</h1>
+      <Button variant="contained" color="primary">
+        Hello World
+      </Button>
     </div>
   );
 }
