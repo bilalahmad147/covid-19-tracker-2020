@@ -49,10 +49,10 @@ export const getAllData = async (country) => {
     changeableUrl = `${url2}/countries/${country}`;
   }
   try {
-    const {
-      data: { confirmed, recovered, deaths, lastUpdate },
-    } = await fetch(changeableUrl);
-    return { confirmed, recovered, deaths, lastUpdate };
+    const res = await fetch(changeableUrl);
+    const { confirmed, recovered, deaths, lastUpdate } = await res.json();
+    const data = { confirmed, recovered, deaths, lastUpdate };
+    return data;
   } catch (error) {
     return error;
   }

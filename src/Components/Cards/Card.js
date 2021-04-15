@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { getCountry } from "../ApiData/ApiData";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,18 +20,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Card() {
+export default function Card({data}) {
   const classes = useStyles();
 
-  const fetchData = async () => {
-    const response = await getCountry();
-    let data = await response.json();
-    console.log(data);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { confirmed, deaths, recovered, lastUpdate } = data;
+  if (!confirmed) {
+    return "data is loading...";
+  }
 
   return (
     <div className={classes.root}>
@@ -46,16 +40,11 @@ export default function Card() {
               New Confirmed Cases
             </Typography>
             <Typography className="pos" variant="h5" component="h2">
-              <CountUp
-                start={0}
-                end={100000}
-                duration={2.75}
-                separator=","
-              />
+              <CountUp start={0} end={confirmed.value} duration={2.75} separator="," />
             </Typography>
-            {/* <Typography variant="body2" component="p">
+            <Typography variant="body2" component="p" gutterBottom>
               Dated: {new Date(lastUpdate).toDateString()}
-            </Typography> */}
+            </Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -67,16 +56,11 @@ export default function Card() {
               New Confirmed Deaths
             </Typography>
             <Typography className="pos" variant="h5" component="h2">
-              <CountUp
-                start={0}
-                end={200000}
-                duration={2.75}
-                separator=","
-              />
+              <CountUp start={0} end={deaths.value} duration={2.75} separator="," />
             </Typography>
-            {/* <Typography variant="body2" component="p">
+            <Typography variant="body2" component="p" gutterBottom>
               Dated: {new Date(lastUpdate).toDateString()}
-            </Typography> */}
+            </Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -88,16 +72,11 @@ export default function Card() {
               New Confirmed Recovered
             </Typography>
             <Typography className="pos" variant="h5" component="h2">
-              <CountUp
-                start={0}
-                end={3000000}
-                duration={2.75}
-                separator=","
-              />
+              <CountUp start={0} end={recovered.value} duration={2.75} separator="," />
             </Typography>
-            {/* <Typography variant="body2" component="p">
+            <Typography variant="body2" component="p" gutterBottom>
               Dated: {new Date(lastUpdate).toDateString()}
-            </Typography> */}
+            </Typography>
           </Paper>
         </Grid>
       </Grid>
