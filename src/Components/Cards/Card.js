@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import { getCountry } from "../ApiData/ApiData";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,15 +24,15 @@ const useStyles = makeStyles((theme) => ({
 export default function Card() {
   const classes = useStyles();
 
-  // const fetchData = async () => {
-  //   const response = await getAllData();
-  //   let data = await response.json();
-  //   console.log(data);
-  // };
+  const fetchData = async () => {
+    const response = await getCountry();
+    let data = await response.json();
+    console.log(data);
+  };
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className={classes.root}>

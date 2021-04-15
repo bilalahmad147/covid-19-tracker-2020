@@ -1,50 +1,37 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import React, { useState, useEffect } from "react";
+import { NativeSelect, FormControl } from "@material-ui/core";
+import { getCountries } from "../ApiData/ApiData";
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-}));
+const SearchBar = () => {
+  const [initialCountries, setCountries] = useState([]);
 
-export default function SimpleSelect() {
-  const classes = useStyles();
-  const [age, setAge] = React.useState('');
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const fetchApi = async () => {
+    const response = await getCountries();
+    let {countries} = await response.json();
+    const countryNamesList = countries.map(country => country.name)
+    setCountries(countryNamesList)
   };
 
-  console.log(age);
+  useEffect(() => {
+    fetchApi();
+  }, []);
+
+//   console.log({initialCountries});
 
   return (
     <div>
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-helper-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
-          value={age}
-          onChange={handleChange}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-        <FormHelperText>Some important helper text</FormHelperText>
+      <FormControl className="formControl">
+        <NativeSelect defaultValue="">
+          <option value="">Global</option>
+          {initialCountries.map((country, i) => (
+            <option key={i} value={country}>
+              {country}
+            </option>
+          ))}
+        </NativeSelect>
       </FormControl>
     </div>
   );
-}
+};
+
+export default SearchBar;

@@ -35,11 +35,8 @@ export const getDailyStatus = async () => {
 
 export const getCountries = async () => {
   try {
-    const {
-      data: { countries },
-    } = await fetch(`${url2}/countries`);
-
-    return countries.map((country) => country.name);
+    const res = await fetch(`${url2}/countries`);
+    return res;
   } catch (error) {
     return error;
   }
