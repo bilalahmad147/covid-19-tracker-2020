@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import { getAllData } from "./Components/ApiData/ApiData";
 import Card from "./Components/Cards/Card";
+import Chart from "./Components/Charts/Charts";
 import SearchBar from "./Components/SearchBar/SearchBar";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
       <h1>Covid-19 Tracker</h1>
       <SearchBar handleCountryChange={handleCountryChange} />
       <Card data={state.data} />
+      <Chart />
     </div>
   );
 }
