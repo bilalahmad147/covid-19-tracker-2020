@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import CountUp from "react-countup";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,20 +22,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Card() {
   const classes = useStyles();
-  let [country, setCountry] = useState([])
 
-  const fetchData = async () => {
-    const response = await fetch("https://api.covid19api.com/countries");
-    let data = await response.json();
-    console.log(data);
-    setCountry(data)
-  };
+  // const fetchData = async () => {
+  //   const response = await getAllData();
+  //   let data = await response.json();
+  //   console.log(data);
+  // };
 
-  console.log(country);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   return (
     <div className={classes.root}>
@@ -43,7 +41,20 @@ export default function Card() {
             style={{ borderBottom: "5px solid blue" }}
             className={classes.paper}
           >
-            <h3>New Confirmed Cases</h3>
+            <Typography className="new" gutterBottom>
+              New Confirmed Cases
+            </Typography>
+            <Typography className="pos" variant="h5" component="h2">
+              <CountUp
+                start={0}
+                end={100000}
+                duration={2.75}
+                separator=","
+              />
+            </Typography>
+            {/* <Typography variant="body2" component="p">
+              Dated: {new Date(lastUpdate).toDateString()}
+            </Typography> */}
           </Paper>
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -51,7 +62,20 @@ export default function Card() {
             style={{ borderBottom: "5px solid red" }}
             className={classes.paper}
           >
-            <h3>New Confirmed Deaths</h3>
+            <Typography className="death" gutterBottom>
+              New Confirmed Deaths
+            </Typography>
+            <Typography className="pos" variant="h5" component="h2">
+              <CountUp
+                start={0}
+                end={200000}
+                duration={2.75}
+                separator=","
+              />
+            </Typography>
+            {/* <Typography variant="body2" component="p">
+              Dated: {new Date(lastUpdate).toDateString()}
+            </Typography> */}
           </Paper>
         </Grid>
         <Grid item xs={12} sm={4}>
@@ -59,17 +83,23 @@ export default function Card() {
             style={{ borderBottom: "5px solid green" }}
             className={classes.paper}
           >
-            <h3>New Recovered Cases</h3>
+            <Typography className="rec" gutterBottom>
+              New Confirmed Recovered
+            </Typography>
+            <Typography className="pos" variant="h5" component="h2">
+              <CountUp
+                start={0}
+                end={3000000}
+                duration={2.75}
+                separator=","
+              />
+            </Typography>
+            {/* <Typography variant="body2" component="p">
+              Dated: {new Date(lastUpdate).toDateString()}
+            </Typography> */}
           </Paper>
         </Grid>
       </Grid>
-      {
-          country.map((val,ind)=>{
-            return (
-                <h1>{val.Country}</h1>
-            )
-          })
-      }
     </div>
   );
 }

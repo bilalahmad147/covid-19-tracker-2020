@@ -1,6 +1,4 @@
-import { FiberSmartRecordSharp } from "@material-ui/icons";
-
-const url = "https://api.covid19api.com/";
+const url = "https://api.covid19api.com";
 const url2 = "https://covid19.mathdro.id/api";
 
 export const getData = async () => {
@@ -56,8 +54,7 @@ export const getAllData = async (country) => {
   try {
     const {
       data: { confirmed, recovered, deaths, lastUpdate },
-    } = await axios.get(changeableUrl);
-
+    } = await fetch(changeableUrl);
     return { confirmed, recovered, deaths, lastUpdate };
   } catch (error) {
     return error;
