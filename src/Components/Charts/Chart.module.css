@@ -1,0 +1,10 @@
+.mainChartDiv{
+    width: 60%;
+    margin: 0 auto;
+}
+@media only screen and (max-width: 650px){
+    .mainChartDiv{
+        width: 90%;
+        margin: 0 auto;
+    }
+}

@@ -20,13 +20,13 @@ export const getCountry = async () => {
 
 export const getDailyStatus = async () => {
   try {
-    const { data } = await fetch(`${url2}/daily`);
+    const res = await fetch(`${url2}/daily`);
+    const data = await res.json();
     const mydaily = data.map(({ confirmed, deaths, reportDate: date }) => ({
       confirmed: confirmed.total,
       deaths: deaths.total,
       date,
     }));
-    console.log(mydaily);
     return mydaily;
   } catch (error) {
     console.log(error);

@@ -30,7 +30,7 @@ function App() {
       <h1>Covid-19 Tracker</h1>
       <SearchBar handleCountryChange={handleCountryChange} />
       <Card data={state.data} />
-      <Chart />
+      <Chart data={state.data} country={state.country} />
     </div>
   );
 }

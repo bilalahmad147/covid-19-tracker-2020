@@ -1,35 +1,67 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
+import { getDailyStatus } from "../ApiData/ApiData";
+import style from './Chart.module.css'
 
-const data = {
-  labels: ["January", "February", "March", "April", "May", "June", "July"],
-  datasets: [
-    {
-      label: "My First dataset",
-      backgroundColor: "rgba(255,99,132,0.2)",
-      borderColor: "rgba(255,99,132,1)",
-      borderWidth: 1,
-      hoverBackgroundColor: "rgba(255,99,132,0.4)",
-      hoverBorderColor: "rgba(255,99,132,1)",
-      data: [65, 59, 80, 81, 56, 55, 40],
-    },
-  ],
+const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
+  const [daily, setDaily] = useState([]);
+
+  const fetchData = async () => {
+    const res = await getDailyStatus();
+    setDaily(res);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const barChart = confirmed ? (
+    <Bar
+      data={{
+        labels: ["Infected", "Recovered", "Deaths"],
+        datasets: [
+          {
+            label: "People",
+            backgroundColor: [
+              "rgba(0, 0, 255, 0.5)",
+              "rgba(0, 255, 0, 0.5)",
+              "rgba(255, 0, 0, 0.5)",
+            ],
+            data: [confirmed.value, recovered.value, deaths.value],
+          },
+        ],
+      }}
+      options={{
+        legend: { display: false },
+        title: { display: true, text: `Current state in ${country}` },
+      }}
+    />
+  ) : null;
+
+  const lineChart = daily[0] ? (
+    <Line
+      data={{
+        labels: daily.map(({ date }) => date),
+        datasets: [
+          {
+            data: daily.map((data) => data.confirmed),
+            label: "Infected",
+            borderColor: "#3333ff",
+            fill: true,
+          },
+          {
+            data: daily.map((data) => data.deaths),
+            label: "Deaths",
+            borderColor: "red",
+            backgroundColor: "rgba(255, 0, 0, 0.5)",
+            fill: true,
+          },
+        ],
+      }}
+    />
+  ) : null;
+
+  return <div className={style.mainChartDiv}>{country ? barChart : lineChart}</div>;
 };
-
-const Chart = () => {
-  return (
-    <div>
-      <h2>Bar Example (custom size)</h2>
-      <Bar
-        data={data}
-        width={100}
-        height={50}
-        options={{
-          maintainAspectRatio: false,
-        }}
-      />
-    </div>
-  );
-};
-
 export default Chart;
