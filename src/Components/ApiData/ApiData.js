@@ -1,22 +1,4 @@
-const url = "https://api.covid19api.com";
 const url2 = "https://covid19.mathdro.id/api";
-
-export const getData = async () => {
-  try {
-    const res = await fetch(`${url}/summary`);
-    return res;
-  } catch (error) {
-    console.log(error);
-  }
-};
-export const getCountry = async () => {
-  try {
-    const res = await fetch(`${url}/countries`);
-    return res;
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 export const getDailyStatus = async () => {
   try {
